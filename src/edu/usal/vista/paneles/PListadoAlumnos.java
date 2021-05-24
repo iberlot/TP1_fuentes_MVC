@@ -1,35 +1,63 @@
 package edu.usal.vista.paneles;
 
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+
 import java.awt.GridLayout;
 import java.awt.BorderLayout;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
 
 import edu.usal.controller.PAlumnosController;
+import edu.usal.controller.PListadoAlumnosController;
 import edu.usal.negocio.dominio.Alumno;
 import edu.usal.vista.eventos.PAlumnosEvent;
+import edu.usal.vista.eventos.PListadoAlumnosEvent;
 
 import javax.swing.JButton;
+import javax.swing.JFrame;
 
-public class PAlumnos extends JPanel {
+public class PListadoAlumnos extends JPanel {
 
 	private JTextField txtNombre;
 	private JTextField txtApellido;
 	private JTextField txtDni;
 	private JButton btnAceptar;
 	private JButton btnCancelar;
-	private PAlumnosEvent evento;
+	private PListadoAlumnosEvent evento;
+
+	private JPanel contentPane;
+	private JTable tabla;
+	private JScrollPane scroll;
+
+	public static String[] getColumnNames() {
+		return new String[] { "Nombre", "Apellido", "Pasatiempo", "Años Practica", "Soltero/a", "Editar", "Borrar" };
+	}
+
+	public static Object[][] getData() {
+		return new Object[][] { { "Maria", "Campione", "Esquiar", new Integer(4), Boolean.FALSE, "Editar", "Borrar"  },
+				{ "Lucas", "Hum", "Patinar", new Integer(10), Boolean.FALSE, "Editar", "Borrar" },
+				{ "Carla", "Gonzales", "Escalar", new Integer(2), Boolean.FALSE, "Editar", "Borrar" },
+				{ "Marcos", "Esposito", "Nadar", new Integer(8), Boolean.TRUE, "Editar", "Borrar" },
+				{ "Angela", "Perez", "Correr", new Integer(1), Boolean.TRUE, "Editar", "Borrar" } };
+	}
+
 
 	/**
 	 * Create the panel.
 	 */
-	public PAlumnos() {
-		this.evento = new PAlumnosEvent(this);
+	public PListadoAlumnos() {
+		this.evento = new PListadoAlumnosEvent(this);
 		this.init();
 	}
 
 	private void init() {
+		String[] columnNames = this.getColumnNames();
+		Object[][] data = this.getData();
+		this.tabla = new JTable(data, columnNames);
+
 		setLayout(new BorderLayout(0, 0));
 
 		JPanel pTitulo = new JPanel();
@@ -43,33 +71,7 @@ public class PAlumnos extends JPanel {
 		pFormulario.setLayout(new GridLayout(4, 2, 0, 0));
 
 		JLabel lblNewLabel_1 = new JLabel("Nombre:");
-		pFormulario.add(lblNewLabel_1);
-
-		txtNombre = new JTextField();
-		pFormulario.add(txtNombre);
-		txtNombre.setColumns(10);
-
-		JLabel lblNewLabel_2 = new JLabel("Apellido:");
-		pFormulario.add(lblNewLabel_2);
-
-		txtApellido = new JTextField();
-		pFormulario.add(txtApellido);
-		txtApellido.setColumns(10);
-
-		JLabel lblNewLabel_3 = new JLabel("DNI:");
-		pFormulario.add(lblNewLabel_3);
-
-		txtDni = new JTextField();
-		pFormulario.add(txtDni);
-		txtDni.setColumns(10);
-
-		btnAceptar = new JButton("Aceptar");
-		pFormulario.add(btnAceptar);
-
-		btnCancelar = new JButton("Cancelar");
-		pFormulario.add(btnCancelar);
-
-		btnAceptar.addActionListener(this.evento);
+		pFormulario.add(this.tabla);
 
 	}
 
@@ -101,7 +103,7 @@ public class PAlumnos extends JPanel {
 		return alumno;
 	}
 
-	public void setController(PAlumnosController controller) {
+	public void setController(PListadoAlumnosController controller) {
 		this.evento.setController(controller);
 	}
 
