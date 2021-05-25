@@ -4,7 +4,6 @@ import javax.swing.JOptionPane;
 
 import edu.usal.negocio.dao.AlumnoDAO;
 import edu.usal.negocio.dominio.Alumno;
-import edu.usal.vista.paneles.PAlumnos;
 import edu.usal.vista.paneles.PListadoAlumnos;
 
 public class PListadoAlumnosController {
